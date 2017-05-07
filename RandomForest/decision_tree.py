@@ -1,6 +1,8 @@
-import decision_tree_builder as tb
-import numpy as np
+from decision_tree_builder import build_tree
+from decision_tree_builder import print_tree
+import time
 
+import numpy as np
 
 class DecisionTree(object):
     """
@@ -8,7 +10,6 @@ class DecisionTree(object):
 
     :param max_tree_depth: maximum depth for this tree.
     """
-
     def __init__(self, max_tree_depth):
         self.max_depth = max_tree_depth
 
@@ -20,25 +21,41 @@ class DecisionTree(object):
         # TODO: Build a tree that has self.max_depth
         # TODO: Remove this toto and the todo above after you
         # implement the todo above.
-        data = np.hstack((X, Y))
-        self.trees = tb.build_tree(list(data), current_depth=0, max_depth=self.max_depth)
+#        start_time = time.time()
 
+        self.tree=build_tree((np.concatenate((X, Y), axis=1)), 0, self.max_depth)
+       
     def predict(self, X):
         """
         :param X: 2 dimensional python list or numpy 2 dimensional array
-        :return: Y : 1 dimension python list with labels
+        :return: Y - 1 dimension python list with labels
         """
         # TODO: Evaluate label of all the elements in `X` and
         # return same size list with labels.
+        
+        Y=[]
+        for i in range (0, len(X)):
+            tree=self.tree
+            while tree.is_leaf==False:
+                if type(X[i][tree.column]) is int or type(X[i][tree.column]) is float or type(X[i][tree.column]) is np.float64:
+                    if X[i][tree.column]>tree.value:
+                        tree=tree.true_branch
+                    else:
+                        tree=tree.false_branch
+                else:
+                    print("error")
+                    if X[i][tree.column]==tree.value:
+                        tree=tree.true_branch
+                    else:
+                        tree=tree.false_branch
+            Y.append(tree.result)
+        return Y
+        
+                
+        
+
+
+            
         # TODO: Remove this toto and the todo above after you
         # implement the todo above.
-        Y = []
-        for data_item in X:
-            current_node = self.trees
-            while current_node.is_leaf == False:
-                if data_item[current_node.column] >= current_node.value:
-                    current_node = current_node.true_branch
-                else:
-                    current_node = current_node.false_branch
-            Y.append(current_node.result)
-        return Y
+    
