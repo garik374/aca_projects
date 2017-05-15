@@ -1,17 +1,8 @@
-# coding: utf-8
-
-# In[78]:
-
-import numpy as np
 from collections import defaultdict
-
-
-# In[79]:
 
 
 class DecisionNode(object):
     """
-    README
     DecisionNode is a building block for Decision Trees.
     DecisionNode is a python class representing a  node in our decision tree
     node = DecisionNode()  is a simple usecase for the class
@@ -42,8 +33,6 @@ class DecisionNode(object):
         self.result = result
 
 
-# In[80]:
-
 def dict_of_values(data):
     """
     param data: a 2D Python list representing the data. Last column of data is Y.
@@ -60,8 +49,6 @@ def dict_of_values(data):
         results[r] += 1
     return dict(results)
 
-
-# In[81]:
 
 def divide_data(data, feature_column, feature_val):
     """
@@ -83,8 +70,6 @@ def divide_data(data, feature_column, feature_val):
 
     return data1, data2
 
-
-# In[82]:
 
 def gini_impurity(data1, data2):
     """
@@ -124,8 +109,6 @@ def gini_impurity(data1, data2):
     second_sum = len(data2) * sum([pk2 * (1 - pk2) for pk2 in pk2_dic.values()])
     return first_sum + second_sum
 
-
-# In[83]:
 
 def build_tree(data, current_depth=0, max_depth=1e10):
     """
@@ -173,14 +156,6 @@ def build_tree(data, current_depth=0, max_depth=1e10):
     # best_split is tuple (data1,data2) which shows the two datas for the best divison so far
     best_split = None
 
-    # TODO
-    # You need to find the best feature to divide the data
-    # For each feature and each possible value of the feature compute the
-    # gini number for that division. You need to find the feature that minimizes
-    # gini number. Remember that last column of data is Y
-    # Think how you can use the divide_data and gini_impurity functions you wrote 
-    # above
-
     for feature_column in range(len(data[0]) - 1):
         sorted_features = sorted(set([data[i][feature_column] for i in range(len(data))]))
         lines = [(sorted_features[i] + sorted_features[i + 1]) / 2. for i in range(len(sorted_features) - 1)]
@@ -197,7 +172,7 @@ def build_tree(data, current_depth=0, max_depth=1e10):
     if abs(self_gini - best_gini) < 1e-10:
         return DecisionNode(current_results=dict_of_values(data), is_leaf=True, result=result)
     else:
-        # TODO
+
         # recursively call build tree, construct the correct return argument and return
         return DecisionNode(column=best_column,
 

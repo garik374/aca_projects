@@ -45,11 +45,7 @@ class RandomForest(object):
         list with labels, and conf being 1 dimensional list with
         confidences for each of the labels.
         """
-        # TODO: Evaluate labels in each of the `self.tree`s and return the
-        # label and confidence with the most votes for each of
-        # the data points in `X`
-        # TODO: Remove this toto and the todo above after you
-        # implement the todo above.
+
         Y = []
         conf = []
         for data_item in X:
